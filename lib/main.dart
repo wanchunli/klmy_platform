@@ -4,8 +4,7 @@ import 'package:klmyplatform/pages/login_page.dart';
 import 'package:klmyplatform/pages/main_page.dart';
 import 'package:klmyplatform/provider_index.dart';
 import 'package:provider/provider.dart';
-
-import 'device/platform.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MultiProvider(
       providers: providers,
@@ -31,10 +30,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: new Scaffold(
-        body: Provider.of<Token>(context, listen: false).token == null
+        body: _getToken == null
             ? LoginPage()
             : MainPage(),
       ),
     );
+  }
+
+  Future<String> _getToken() async {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    SharedPreferences prefs = await _prefs;
+    String token = prefs.getString('token');
+    return token;
   }
 }

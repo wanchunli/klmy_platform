@@ -2,6 +2,10 @@ import 'package:klmyplatform/api/api.dart';
 import 'package:klmyplatform/bean/token.dart';
 import 'package:klmyplatform/device/platform.dart';
 import 'package:klmyplatform/model/base_model.dart';
+import 'dart:convert';
+import 'package:convert/convert.dart';
+import 'package:crypto/crypto.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenModel extends BaseModel {
   Api _api;
@@ -15,7 +19,7 @@ class TokenModel extends BaseModel {
     loadingg(true);
     Map map = {};
     map.putIfAbsent("loginName", () => loginname);
-    map.putIfAbsent("loginPassword", () => pass);
+    map.putIfAbsent("loginPassword", () => generateMd5(pass));
     var platformInfo = new PlatformInfo();
     var info = await platformInfo.initPlatformState();
 
@@ -28,20 +32,28 @@ class TokenModel extends BaseModel {
     map.putIfAbsent("loginAddress", () => '广东省深圳市宝安区塘和三路26号靠近塘头第三工业区');
     map.putIfAbsent("latitude", () => 22.65352);
     map.putIfAbsent("longitude", () => 113.907726);
-
-//    map.putIfAbsent("deviceImei", () => info['androidId']);
-//    map.putIfAbsent("deviceToken", () => info['androidId']);
-//    map.putIfAbsent("deviceType", () => '');
-//    map.putIfAbsent("deviceName", () => info['brand']);
-//    map.putIfAbsent("deviceVer", () => info['brand']);
-//    map.putIfAbsent("loginType", () => info['PWD']);
-//    map.putIfAbsent("loginAddress", () => info['深圳']);
-//    map.putIfAbsent("latitude", () => 0);
-//    map.putIfAbsent("longitude", () => 0);
-
     Token token = await _api.login(map);
-//    Token token = await _api.getData();
+    if (token != null) {
+      _saveToken(token);
+    }
     loadingg(false);
     return token;
+  }
+
+  // md5 加密
+  String generateMd5(String data) {
+    var content = new Utf8Encoder().convert(data);
+    var digest = md5.convert(content);
+    // 这里其实就是 digest.toString()
+    return hex.encode(digest.bytes);
+  }
+
+  void _saveToken(Token token) async {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    prefs.setString("token", token.token);
+    prefs.setInt("userId", token.userId);
+    prefs.setString("linkPhone", token.linkPhone);
+    prefs.setString("userName", token.userName);
   }
 }

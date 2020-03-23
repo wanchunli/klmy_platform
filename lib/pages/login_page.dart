@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 this.loginname = value;
               },
               decoration: InputDecoration(
-                hintText: '请输入手机号码',
+                hintText: '请输入账号',
                 icon: Icon(Icons.account_box),
               ),
             ),
@@ -98,26 +98,27 @@ class _LoginPageState extends State<LoginPage> {
               child: ProviderWidget<TokenModel>(
                 // ignore: missing_return
                 builder: (context, model, child) {
-                    return RaisedButton(
-                      color: Colors.blue,
-                      child: Text(
-                        '登陆',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      onPressed: () async {
-                        _showLoadingDialog(title: "正在登陆...");
-                        Token token = await model.login(loginname, pass);
-//                        Token pre = Provider.of<Token>(context, listen: false);
-//                        pre.update(token);
+                  return RaisedButton(
+                    color: Colors.blue,
+                    child: Text(
+                      '登陆',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    onPressed: () async {
+                      _showLoadingDialog(title: "正在登陆...");
+                      Token token = await model.login(loginname, pass);
+                      if (token != null) {
+                        Token pre = Provider.of<Token>(context, listen: false);
+                        pre.update(token);
                         Navigator.pop(context);
-//                        Navigator.push(context,
-//                            MaterialPageRoute(builder: (_) => MainPage()));
-
-                      },
-                    );
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => MainPage()));
+                      }
+                    },
+                  );
                 },
                 model: TokenModel(Provider.of(context)),
               ),
