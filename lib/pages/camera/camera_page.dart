@@ -1,61 +1,39 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:klmyplatform/bean/token.dart';
-import 'package:klmyplatform/pages/login_page.dart';
-import 'package:klmyplatform/pages/main_page.dart';
-import 'package:klmyplatform/provider_index.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
-void main() => runApp(MultiProvider(
-      providers: providers,
-      child: MyApp(),
-    ));
+class CameraWidget extends StatelessWidget{
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-
-      home: new Scaffold(
-        body: _getToken == null
-            ? LoginPage()
-            : MainPage(),
-      ),
-    );
+  Widget build(BuildContext context){
+    // TODO: implement build
+    takeCamera();
+    return CameraExampleHome();
   }
 
-  Future<String> _getToken() async {
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    SharedPreferences prefs = await _prefs;
-    String token = prefs.getString('token');
-    return token;
+  Future<void> takeCamera() async{
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = await availableCameras();
+      print('cameras length is :${cameras.length}');
+    } on CameraException catch (e) {
+      logError(e.code, e.description);
+    }
   }
 
 
 }
 
 class CameraExampleHome extends StatefulWidget {
+
+
   @override
   _CameraExampleHomeState createState() {
+
     return _CameraExampleHomeState();
   }
 }
@@ -116,6 +94,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

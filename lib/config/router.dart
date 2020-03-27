@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:klmyplatform/pages/camera/camera_page.dart';
 import 'package:klmyplatform/pages/login_page.dart';
+import 'package:klmyplatform/pages/meter/detail_page.dart';
+import 'package:klmyplatform/pages/meter/home_page.dart';
+import 'package:klmyplatform/pages/meter/meter_read_page.dart';
 
 var routes = {
   '/login':(context) => LoginPage(),
+  '/meterread':(context) => ReadPage(),
+  '/camera':(context) => CameraWidget(),
+  '/detail':(context) => HomePage(),
 };
 
 //固定写法

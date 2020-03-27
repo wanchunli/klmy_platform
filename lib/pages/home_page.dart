@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:klmyplatform/bean/TravelBean.dart';
 import 'package:klmyplatform/components/MyDialog.dart';
 import 'dart:convert' as json;
 import 'package:http/http.dart' as http;
@@ -80,7 +81,7 @@ class _HomePageState extends State {
                   ),
                 ),
                 onTap: (){
-
+                  Navigator.pushNamed(context, '/meterread');
                 },
               ),
             ),
@@ -97,15 +98,20 @@ class _HomePageState extends State {
                           children: <Widget>[
                             Expanded(
                               flex: 1,
-                              child: Container(
-                                color: Colors.blue,
-                                child: Center(
-                                  child: Text(
-                                    "哈哈3",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
+                              child: InkWell(
+                                child: Container(
+                                  color: Colors.blue,
+                                  child: Center(
+                                    child: Text(
+                                      "相机",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20.0),
+                                    ),
                                   ),
                                 ),
+                                onTap: () {
+                                Navigator.pushNamed(context, '/camera');
+                              },
                               ),
                             )
                           ],
@@ -118,15 +124,20 @@ class _HomePageState extends State {
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: Container(
-                                color: Colors.deepPurpleAccent,
-                                child: Center(
-                                  child: Text(
-                                    "哈哈4",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
+                              child: InkWell(
+                                child: Container(
+                                  color: Colors.deepPurpleAccent,
+                                  child: Center(
+                                    child: Text(
+                                      "动效",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20.0),
+                                    ),
                                   ),
                                 ),
+                                onTap: (){
+                                  Navigator.pushNamed(context, '/detail');
+                                },
                               ),
                             )
                           ],

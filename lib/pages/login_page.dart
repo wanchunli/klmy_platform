@@ -108,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                         side: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     onPressed: () async {
+
                       _showLoadingDialog(title: "正在登陆...");
                       Token token = await model.login(loginname, pass);
                       if (token != null) {
