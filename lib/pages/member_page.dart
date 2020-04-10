@@ -25,7 +25,7 @@ class _MemberState extends State {
           MyButton("PHP"),
           MyButton("C#"),
           MyButton("Object-C"),
-          MyButton("Swift"),
+          MyButton("Widgets"),
         ],
       ),
     );
@@ -53,7 +53,9 @@ class MyButton extends StatelessWidget {
             textColor: Colors.black);
         if (this.text == "Login") {
           Navigator.pushNamed(context, '/login');
-        } else {
+        } else if (this.text == "Widgets") {
+          Navigator.pushNamed(context, '/widgets');
+        }else {
           Navigator.pushNamed(context, '/tabbarcontroller');
         }
       },

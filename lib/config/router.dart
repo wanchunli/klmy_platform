@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:klmyplatform/pages/base/widget1.dart';
 import 'package:klmyplatform/pages/camera/camera_page.dart';
 import 'package:klmyplatform/pages/login_page.dart';
 import 'package:klmyplatform/pages/meter/detail_page.dart';
@@ -10,6 +11,7 @@ var routes = {
   '/meterread':(context) => ReadPage(),
   '/camera':(context) => CameraWidget(),
   '/detail':(context) => HomePage(),
+  '/widgets':(context) => WidgetPage1(),
 };
 
 //固定写法
