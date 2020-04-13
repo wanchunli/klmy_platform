@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:klmyplatform/bean/bean_video.dart';
 import 'package:video_player/video_player.dart';
 
@@ -23,6 +24,7 @@ class _VideoItemPager extends State<VideoItemPager>
   Future videoFuture;
 
   AnimationController animController;
+  bool isLike;
 
   @override
   void initState() {
@@ -62,6 +64,7 @@ class _VideoItemPager extends State<VideoItemPager>
         print("status is reverse");
       }
     });
+    isLike = true;
   }
 
   @override
@@ -324,7 +327,9 @@ class _VideoItemPager extends State<VideoItemPager>
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _showBottomWidget();
+          },
         ),
         Text(
           '${itemCount}',
@@ -385,5 +390,196 @@ class _VideoItemPager extends State<VideoItemPager>
         ),
       ),
     );
+  }
+
+  //底部评论
+  _showBottomWidget() {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Container(
+            height: 550,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                //标题
+                Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment(0, 0),
+                      child: Text(
+                        '评论区',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment(1, 0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Icon(
+                            Icons.clear,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                //评论列表
+                Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                        itemCount: 100,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            margin: EdgeInsets.all(5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=179921705,932197673&fm=26&gp=0.jpg"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '会飞的鱼',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[500],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Wrap(
+                                        spacing: 10,
+                                        children: <Widget>[
+                                          Text(
+                                            "the shy越强，我猫皇洗的越白,the shy越强，我猫皇洗的越白,the shy越强，我猫皇洗的越白",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 5,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Text(
+                                              '3分钟前',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[500]),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    isLike
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isLike ? Colors.red : Colors.grey,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    Fluttertoast.showToast(msg: '点击了小心心');
+                                    setState(() {
+//                                      isLike = !isLike;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        color: Colors.black,
+                        margin: EdgeInsets.only(left: 10),
+                        child: TextField(
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+
+                          decoration: InputDecoration(
+                            hintText: '有爱评论，说点好听的~',
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Icon(Icons.account_circle, color: Colors.grey),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Icon(
+                        Icons.face,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
