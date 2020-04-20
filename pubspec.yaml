@@ -32,7 +32,7 @@ dependencies:
     #启动页面
   url_launcher: ^5.0.1
     #刷新
-  pull_to_refresh: ^1.5.7
+  pull_to_refresh: ^1.5.8
     #状态管理
   provider: ^4.0.4
     #提示
@@ -74,7 +74,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   # assets:
   assets:
-    - assets/images/
+    - assets/images/2.0x/home_search_icon.png
+    - assets/images/2.0x/home_bar_search_iv.png
+    - assets/images/3.0x/home_search_icon.png
+    - assets/images/3.0x/home_bar_search_iv.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
