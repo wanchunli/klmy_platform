@@ -76,6 +76,16 @@ flutter:
   assets:
     - assets/images/2.0x/home_search_icon.png
     - assets/images/2.0x/home_bar_search_iv.png
+    - assets/images/2.0x/home_fanc_nav_1.png
+    - assets/images/2.0x/home_fanc_nav_2.png
+    - assets/images/2.0x/home_fanc_nav_3.png
+    - assets/images/2.0x/home_fanc_nav_4.png
+    - assets/images/2.0x/home_fanc_nav_5.png
+    - assets/images/2.0x/home_fanc_nav_21.png
+    - assets/images/2.0x/home_fanc_nav_22.png
+    - assets/images/2.0x/home_fanc_nav_23.png
+    - assets/images/2.0x/home_fanc_nav_24.png
+    - assets/images/2.0x/home_fanc_nav_25.png
     - assets/images/3.0x/home_search_icon.png
     - assets/images/3.0x/home_bar_search_iv.png
   #  - images/a_dot_burr.jpeg

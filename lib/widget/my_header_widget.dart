@@ -108,7 +108,8 @@ class _MyHeaderWidgetState extends RefreshIndicatorState<MyHeaderWidget>
             height: 25.0,
             child: defaultTargetPlatform == TargetPlatform.iOS
                 ? const CupertinoActivityIndicator()
-                : const CircularProgressIndicator(strokeWidth: 2.0),
+                : const CircularProgressIndicator(strokeWidth: 2.0,),
+
           );
     } else if (mode == RefreshStatus.completed) {
       child = widget.complete ??
@@ -152,36 +153,49 @@ class _MyHeaderWidgetState extends RefreshIndicatorState<MyHeaderWidget>
     } else if (mode == RefreshStatus.idle || mode == RefreshStatus.canRefresh) {
       return FadeTransition(
           child: Container(
-            child: Stack(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RotatedBox(
-                  child: CustomPaint(
-                    child: Container(
-                      height: 60.0,
-                    ),
-                    painter: _QqPainter(
-                      color: widget.waterDropColor,
-                      listener: _animationController,
-                    ),
-                  ),
-                  quarterTurns:
-                  Scrollable.of(context).axisDirection == AxisDirection.up
-                      ? 10
-                      : 0,
+                Text('- 别扯我了，快松手 -',style: TextStyle(color: Colors.grey[400],fontSize: 14),),
+                SizedBox(height: 10,),
+                Icon(
+                  Icons.arrow_downward,
+                  color: Colors.red,
+                  size: 20,
                 ),
-                Container(
-                  alignment:
-                  Scrollable.of(context).axisDirection == AxisDirection.up
-                      ? Alignment.bottomCenter
-                      : Alignment.topCenter,
-                  margin:
-                  Scrollable.of(context).axisDirection == AxisDirection.up
-                      ? EdgeInsets.only(bottom: 12.0)
-                      : EdgeInsets.only(top: 12.0),
-                  child: widget.idleIcon,
-                )
               ],
             ),
+//            child: Stack(
+//              children: <Widget>[
+//                RotatedBox(
+//                  child: CustomPaint(
+//                    child: Container(
+//                      height: 60.0,
+//                    ),
+//                    painter: _QqPainter(
+//                      color: widget.waterDropColor,
+//                      listener: _animationController,
+//                    ),
+//                  ),
+//                  quarterTurns:
+//                  Scrollable.of(context).axisDirection == AxisDirection.up
+//                      ? 10
+//                      : 0,
+//                ),
+//                Container(
+//                  alignment:
+//                  Scrollable.of(context).axisDirection == AxisDirection.up
+//                      ? Alignment.bottomCenter
+//                      : Alignment.topCenter,
+//                  margin:
+//                  Scrollable.of(context).axisDirection == AxisDirection.up
+//                      ? EdgeInsets.only(bottom: 12.0)
+//                      : EdgeInsets.only(top: 12.0),
+//                  child: widget.idleIcon,
+//                )
+//              ],
+//            ),
             height: 60.0,
           ),
           opacity: _dismissCtl);
