@@ -101,6 +101,7 @@ class _HomePageState extends State with SingleTickerProviderStateMixin {
     },
   ];
   PageController _pageController;
+  ScrollController _scrollController;
 
   @override
   void initState() {
@@ -115,6 +116,9 @@ class _HomePageState extends State with SingleTickerProviderStateMixin {
     _tabController = TabController(
       length: tabTextList.length,
       vsync: this,
+    );
+    _scrollController = new ScrollController(
+      keepScrollOffset: true
     );
   }
 
@@ -213,127 +217,129 @@ class _HomePageState extends State with SingleTickerProviderStateMixin {
               controller: _refreshController,
               onRefresh: _onRefresh,
               onLoading: _onLoading,
-              child: NestedScrollView(
-                headerSliverBuilder: (context, bool) {
-                  return [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        width: double.infinity,
-                        height: 160,
-                        margin: EdgeInsets.only(top: 10.0),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Swiper(
-                          loop: true,
-                          autoplayDelay: 3000,
-                          duration: 1000,
-                          autoplay: true,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: EdgeInsets.only(left: 15, right: 15),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Image.network(
-                                  imageList[index]['url'],
-                                  fit: BoxFit.cover,
+              child: Container(
+                child: NestedScrollView(
+                  reverse: false,
+                  headerSliverBuilder: (context, bool) {
+                    return [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          width: double.infinity,
+                          height: 160,
+                          margin: EdgeInsets.only(top: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10))),
+                          child: Swiper(
+                            loop: true,
+                            autoplayDelay: 3000,
+                            duration: 1000,
+                            autoplay: true,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                    imageList[index]['url'],
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: imageList.length,
-                          onTap: (index) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return MyDialog();
-                                });
-                          },
+                              );
+                            },
+                            itemCount: imageList.length,
+                            onTap: (index) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return MyDialog();
+                                  });
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Column(
-                          children: <Widget>[
-                            GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: funcList.length,
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  //横轴元素个数
-                                  crossAxisCount: 5,
-                                  //纵轴间距
-                                  mainAxisSpacing: 0.0,
-                                  //横轴间距
-                                  crossAxisSpacing: 5.0,
-                                  //子组件宽高长度比例
-                                  childAspectRatio: 0.9,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Image.asset(
-                                            funcList[index]['img'],
-                                            fit: BoxFit.cover,
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Column(
+                            children: <Widget>[
+                              GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: funcList.length,
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    //横轴元素个数
+                                    crossAxisCount: 5,
+                                    //纵轴间距
+                                    mainAxisSpacing: 0.0,
+                                    //横轴间距
+                                    crossAxisSpacing: 5.0,
+                                    //子组件宽高长度比例
+                                    childAspectRatio: 0.9,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Image.asset(
+                                              funcList[index]['img'],
+                                              fit: BoxFit.cover,
+                                            ),
+                                            height: 40,
+                                            width: 40,
                                           ),
-                                          height: 40,
-                                          width: 40,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          funcList[index]['text'],
-                                          style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ],
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            funcList[index]['text'],
+                                            style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SliverPersistentHeader(
-                      delegate: SliverTabBarDelegate(
-                        TabBar(
-                          tabs: tabWidgetList,
-                          controller: _tabController,
-                          indicatorColor: Colors.red[300],
-                          indicatorWeight: 2.0,
-                          isScrollable: true,
-                          labelColor: Colors.black87,
-                          labelStyle: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 16),
-                          unselectedLabelStyle: TextStyle(fontSize: 15),
-                          indicatorSize: TabBarIndicatorSize.label,
-                          onTap: (index) {},
+                      SliverPersistentHeader(
+                        delegate: SliverTabBarDelegate(
+                          TabBar(
+                            tabs: tabWidgetList,
+                            controller: _tabController,
+                            indicatorColor: Colors.red[300],
+                            indicatorWeight: 2.0,
+                            isScrollable: true,
+                            labelColor: Colors.black87,
+                            labelStyle: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
+                            unselectedLabelStyle: TextStyle(fontSize: 15),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            onTap: (index) {},
+                          ),
+                          color: Colors.grey[200],
                         ),
-                        color: Colors.grey[200],
+                        pinned: true,
                       ),
-                      pinned: true,
-                    ),
-                  ];
-                },
-                scrollDirection: Axis.vertical,
-                body: TabBarView(
-                  controller: _tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: tabTextList
-                      .map((value) => buildTabViewItemWidget(value))
-                      .toList(),
+                    ];
+                  },
+                  scrollDirection: Axis.vertical,
+                  body: TabBarView(
+                    controller: _tabController,
+                    children: tabTextList
+                        .map((value) => buildTabViewItemWidget(value))
+                        .toList(),
+                  ),
                 ),
               ),
             ),
@@ -360,11 +366,9 @@ class _HomePageState extends State with SingleTickerProviderStateMixin {
 
   Widget buildTabViewItemWidget(String value) {
     return PageView.builder(
-      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return Container(
           child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: dataList.length,
               itemBuilder: (context, index) {
